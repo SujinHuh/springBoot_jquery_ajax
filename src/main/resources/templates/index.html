@@ -35,6 +35,9 @@
                             <button class="btn btn-outline-secondary" type="button" onclick="dataSend()">submit</button>
                         </div>
                     </div>
+                    <button id="pressMe">Press Me</button>
+                    <button id="create">new</button>
+
                     <div id="resultDiv">
                         <p th:if="${msg}!=null" th:text="${msg}"></p>
                     </div>
@@ -46,20 +49,40 @@
 </div>
 
 <script>
+    $(function () {
+        $("#create").on("click", function () {
+            $("div").html("<button id='newButton'>ok</button>");
+        });
+        $("body").on("click", "#newButton", function (event) {
+            console.log("click");
+        });
+    });
+    $(function () {
+        $("#pressMe").one("click", function () {
+            console.log("단 한번만 이벤트 실행");
+        });
+    });
+
     function dataSend() {
-        var data=$("msg").val();
+        console.log("567");
+        var data = $("#input").val();
         console.log('000');
-        var messageDTO={
-            result:data
+        var messageDTO = {
+            result: data
         };
         $.ajax({
             url: "/dataSend",
             data: messageDTO,
-            type:"POST",
+            type: "POST",
         }).done(function (fragment) {
-            $("data").replaceWith(fragment);
+            $("#resultDiv").replaceWith(fragment);
         });
     }
+</script>
+
+<script type="text/javascript">
+    console.log("123");
+
 </script>
 </body>
 </html>
